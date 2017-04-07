@@ -1,136 +1,39 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
-include("../Classes/Class_base.php");
-session_start();
+include("../Classes/Class_blank.php");
+include("../Classes/Class_file.php");
+
 require_once 'tcpdf/tcpdf.php'; // Подключаем библиотеку
 $_SESSION['kol_vx'] += 1;//Подсчет количества  перезагузок
 
 if (isset($_POST['date_prigody']) && isset($_POST['driver_number_a']) && $_SESSION['kol_vx'] == 1) {
 
-    $obj = new Base();
+    $obj = new Blank();
 
-
-    $_SESSION['date_prigody'] = $_POST['date_prigody'];
-    $_SESSION['time_prigody'] = $_POST['time_prigody'];
-    $_SESSION['country_prigody'] = $_POST['country_prigody'];
-    $_SESSION['place_prigody'] = $_POST['place_prigody'];
-    $_SESSION['demage_health'] = $_POST['demage_health'];
-    $_SESSION['krim_car_A_B'] = $_POST['krim_car_A_B'];
-    $_SESSION['krim_car'] = $_POST['krim_car'];
-    $_SESSION['any_people'] = $_POST['any_people'];
-    $_SESSION['surname_strax_a'] = $_POST['surname_strax_a'];
-    $_SESSION['name_strax_a'] = $_POST['name_strax_a'];
-    $_SESSION['address_strax_a'] = $_POST['address_strax_a'];
-    $_SESSION['pochta_index_strax_a'] = $_POST['pochta_index_strax_a'];
-    $_SESSION['country_strax_a'] = $_POST['country_strax_a'];
-    $_SESSION['tel_email_strax_a'] = $_POST['tel_email_strax_a'];
-    $_SESSION['type_car_a'] = $_POST['type_car_a'];
-    $_SESSION['number_car_a'] = $_POST['number_car_a'];
-    $_SESSION['country_reg_car_a'] = $_POST['country_reg_car_a'];
-    $_SESSION['number_trailer_a'] = $_POST['number_trailer_a'];
-    $_SESSION['country_reg_trailer_a'] = $_POST['country_reg_trailer_a'];
-    $_SESSION['Strax_com_name_a'] = $_POST['Strax_com_name_a'];
-    $_SESSION['Strax_com_number_blank_a'] = $_POST['Strax_com_number_blank_a'];
-    $_SESSION['Strax_com_number_green_card_a'] = $_POST['Strax_com_number_green_card_a'];
-    $_SESSION['Strax_com_green_card_date_start_a'] = $_POST['Strax_com_green_card_date_start_a'];
-    $_SESSION['Strax_com_green_card_date_end_a'] = $_POST['Strax_com_green_card_date_end_a'];
-    $_SESSION['Strax_com_agen_a'] = $_POST['Strax_com_agen_a'];
-    $_SESSION['Strax_com_name_agen_a'] = $_POST['Strax_com_name_agen_a'];
-    $_SESSION['Strax_com_address_a'] = $_POST['Strax_com_address_a'];
-    $_SESSION['Strax_com_country_a'] = $_POST['Strax_com_country_a'];
-    $_SESSION['Strax_com_tel_email_a'] = $_POST['Strax_com_tel_email_a'];
-    $_SESSION['Strax_com_pokritie_a'] = $_POST['Strax_com_pokritie_a'];
-    $_SESSION['driver_surname_a'] = $_POST['driver_surname_a'];
-    $_SESSION['driver_name_a'] = $_POST['driver_name_a'];
-    $_SESSION['driver_address_a'] = $_POST['driver_address_a'];
-    $_SESSION['driver_country_a'] = $_POST['driver_country_a'];
-    $_SESSION['driver_birthday_a'] = $_POST['driver_birthday_a'];
-    $_SESSION['driver_tel_email_a'] = $_POST['driver_tel_email_a'];
-    $_SESSION['driver_number_a'] = $_POST['driver_number_a'];
-    $_SESSION['driver_category_a'] = $_POST['driver_category_a'];
-    $_SESSION['driver_date_end_a'] = $_POST['driver_date_end_a'];
-    $_SESSION['crach_car_a'] = $_POST['crach_car_a'];
-    $_SESSION['notatki_a'] = $_POST['notatki_a'];
-    $_SESSION['surname_strax_b'] = $_POST['surname_strax_b'];
-    $_SESSION['name_strax_b'] = $_POST['name_strax_b'];
-    $_SESSION['address_strax_b'] = $_POST['address_strax_b'];
-    $_SESSION['pochta_index_strax_b'] = $_POST['pochta_index_strax_b'];
-    $_SESSION['country_strax_b'] = $_POST['country_strax_b'];
-    $_SESSION['tel_email_strax_b'] = $_POST['tel_email_strax_b'];
-    $_SESSION['type_car_b'] = $_POST['type_car_b'];
-    $_SESSION['number_car_b'] = $_POST['number_car_b'];
-    $_SESSION['country_reg_car_b'] = $_POST['country_reg_car_b'];
-    $_SESSION['number_trailer_b'] = $_POST['number_trailer_b'];
-    $_SESSION['country_reg_trailer_b'] = $_POST['country_reg_trailer_b'];
-    $_SESSION['Strax_com_name_b'] = $_POST['Strax_com_name_b'];
-    $_SESSION['Strax_com_number_blank_b'] = $_POST['Strax_com_number_blank_b'];
-    $_SESSION['Strax_com_number_green_card_b'] = $_POST['Strax_com_number_green_card_b'];
-    $_SESSION['Strax_com_green_card_date_start_b'] = $_POST['Strax_com_green_card_date_start_b'];
-    $_SESSION['Strax_com_green_card_date_end_b'] = $_POST['Strax_com_green_card_date_end_b'];
-    $_SESSION['Strax_com_agen_b'] = $_POST['Strax_com_agen_b'];
-    $_SESSION['Strax_com_name_agen_b'] = $_POST['Strax_com_name_agen_b'];
-    $_SESSION['Strax_com_address_b'] = $_POST['Strax_com_address_b'];
-    $_SESSION['Strax_com_country_b'] = $_POST['Strax_com_country_b'];
-    $_SESSION['Strax_com_tel_email_b'] = $_POST['Strax_com_tel_email_b'];
-    $_SESSION['Strax_com_pokritie_b'] = $_POST['Strax_com_pokritie_b'];
-    $_SESSION['driver_surname_b'] = $_POST['driver_surname_b'];
-    $_SESSION['driver_name_b'] = $_POST['driver_name_b'];
-    $_SESSION['driver_address_b'] = $_POST['driver_address_b'];
-    $_SESSION['driver_country_b'] = $_POST['driver_country_b'];
-    $_SESSION['driver_birthday_b'] = $_POST['driver_birthday_b'];
-    $_SESSION['driver_tel_email_b'] = $_POST['driver_tel_email_b'];
-    $_SESSION['driver_number_b'] = $_POST['driver_number_b'];
-    $_SESSION['driver_category_b'] = $_POST['driver_category_b'];
-    $_SESSION['driver_date_end_b'] = $_POST['driver_date_end_b'];
-    $_SESSION['crach_car_b'] = $_POST['crach_car_b'];
-    $_SESSION['notatki_b'] = $_POST['notatki_b'];
-
+    $obj->insert_param_session_dtp();
     $obj->add_fine_dtp($_SESSION['date_prigody'] , $_SESSION['driver_number_a']);
     $obj->add_fine_dtp($_SESSION['date_prigody'] , $_SESSION['driver_number_b']);
 
     $id_fine_a = $obj->id_fines($_SESSION['date_prigody'] , $_SESSION['driver_number_a']);
     $id_fine_b = $obj->id_fines($_SESSION['date_prigody'] , $_SESSION['driver_number_b']);
 
-    $uploaddir = 'File/';
-    $uploadfile = $uploaddir . basename($_FILES['plan_dtp']['name']);
+    $file = new File();
 
-    echo '<pre>';
-    if (move_uploaded_file($_FILES['plan_dtp']['tmp_name'] , $uploadfile)) {
-        echo "";
-
-        $type_file = pathinfo($uploadfile , PATHINFO_EXTENSION);
-        $name_file = $uploaddir . "" . uniqid() . "." . $type_file;
-        rename($uploadfile , $name_file);
-    } else {
-        echo "";
-    }
 
     if (isset($_SESSION['driver_number_a']))
-        $obj->add_user_file($_SESSION['driver_number_a'] , $name_file , $id_fine_a , "plan_dtp");
+        $obj->add_user_file($_SESSION['driver_number_a'] ,  $file->upload_on_server_file_blank_dtp() , $id_fine_a , "plan_dtp");
 
     if (isset($_SESSION['driver_number_b']))
-        $obj->add_user_file($_SESSION['driver_number_b'] , $name_file , $id_fine_b , "plan_dtp");
+        $obj->add_user_file($_SESSION['driver_number_b'] ,  $file->upload_on_server_file_blank_dtp() , $id_fine_b , "plan_dtp");
 
 
-    $uploaddir = 'File/';
-    $uploadfile = $uploaddir . basename($_FILES['police_file']['name']);
-
-
-    echo '<pre>';
-    if (move_uploaded_file($_FILES['police_file']['tmp_name'] , $uploadfile)) {
-        echo "";
-        $type_file = pathinfo($uploadfile , PATHINFO_EXTENSION);
-        $name_file = $uploaddir . "" . uniqid() . "." . $type_file;
-        rename($uploadfile , $name_file);
-    } else {
-        echo "";
-    }
+    $file->upload_on_server_file_attachment_blank();
 
     if (isset($_SESSION['driver_number_b']))
-        $obj->add_user_file($_SESSION['driver_number_b'] , $name_file , $id_fine_b , "docaz_dtp");
+        $obj->add_user_file($_SESSION['driver_number_b'] , $file->upload_on_server_file_attachment_blank() , $id_fine_b , "docaz_dtp");
 
     if (isset($_SESSION['driver_number_a']))
-        $obj->add_user_file($_SESSION['driver_number_a'] , $name_file , $id_fine_a , "docaz_dtp");
+        $obj->add_user_file($_SESSION['driver_number_a'] , $file->upload_on_server_file_attachment_blank() , $id_fine_a , "docaz_dtp");
 
 }
 

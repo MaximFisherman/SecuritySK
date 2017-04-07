@@ -1,6 +1,6 @@
 <?php
-include("../Classes/Class_base.php");
-$obj = new Base();
+include("../Classes/Class_check.php");
+$obj = new Check();
 	
 if($obj->select_table_user_email_proverka(trim($_POST["email"])))
 	echo("<script>

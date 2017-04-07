@@ -1,16 +1,13 @@
 <?php
 session_start();
-require_once("../Classes/Class_base.php");
+require_once("../Classes/Class_select_fines.php");
 
-$obj = new Base();
+$obj = new Select_fines();
 
 if(isset($_POST["click_change_fine"]))
 {
 	$obj->update_one_fines_dtp($_POST["number_fine"],$_POST["date_fine"],$_POST["article_fine"]);
 }
-
-
-
 
 
 

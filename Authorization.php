@@ -1,14 +1,12 @@
 <?php
 session_start();
-include("Classes/Class_base.php");
-$obj = new Base();
-$obj->authorization(trim($_POST["login"]),trim($_POST["password"]));
-if($_SESSION["type_avt_user"]=="dai")
-    echo"<script>document.location.replace('Dai_start_page.html');</script>";
-if($_SESSION["type_avt_user"]=="police")
-    echo"<script>document.location.replace('Police_start_page_blank.html');</script>";
-if($_SESSION["type_avt_user"]=="user")
-    echo"<script>document.location.replace('User_start_page_fines.html');</script>";
+include("Classes/Class_reg.php");
+include("Classes/Class_cypher_AES-256.php");
+$obj = new Input();
+if (isset($_POST["login"])&&isset($_POST["password"])) {
+    $obj->authorization(trim($_POST["login"]), trim($_POST["password"]));
+}
+    $obj->check();
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +39,6 @@ if($_SESSION["type_avt_user"]=="user")
 <script src="js/jquery-3.1.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-
 
 
 <div class="login-box">

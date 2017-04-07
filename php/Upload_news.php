@@ -1,17 +1,9 @@
 <?php
-include("../Classes/Class_base.php");
-$obj = new Base();
-
-$uploaddir = 'File/Photo_news/';
-$uploadfile = $uploaddir . basename($_FILES['photo_news']['name']);
-
-if (move_uploaded_file($_FILES['photo_news']['tmp_name'] , $uploadfile)) {
-    $type_file = pathinfo($uploadfile , PATHINFO_EXTENSION);
-    $name_file = $uploaddir . "" . uniqid() . "." . $type_file;
-    rename($uploadfile , $name_file);
-} else {
-    echo "";
-}
+include("../Classes/Class_news.php");
+include("../Classes/Class_file.php");
+$obj = new News();
+$file = new File();
+$file->upload_on_server_file_photo_news();
 
 if(isset($_POST["Title_news"])&&isset($_POST["Name_news"])&&isset($_POST["Description"])&&isset($name_file))
 {

@@ -10,8 +10,8 @@ if(isset($_POST["id_file"]))
 
 }
  
- require_once("../Classes/Class_base.php");
-$obj = new Base();
+ require_once("../Classes/Class_file.php");
+$obj = new File();
 
 if(isset($_POST["id_fine"]))
 {$obj->view_file($_POST['id_fine']);}

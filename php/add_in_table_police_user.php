@@ -1,7 +1,8 @@
 <?php
 session_start();
-include("../Classes/Class_base.php");
-$obj = new Base();
+include("../Classes/Class_edit_police.php");
+include("../Classes/Class_cypher_AES-256.php");
+$obj = new Police_edit();
 
     $uploaddir = 'File/Police_user_photo/';
     $uploadfile = $uploaddir . basename($_FILES['photo_police_user']['name']);
@@ -14,14 +15,18 @@ $obj = new Base();
     } else {
         echo "";
     }
+
 if((isset($_POST['name']))){
+        //Шифрование пароля
+    $c = new McryptCipher($_POST['number_cheton']);
+    $encrypted_password = $c->encrypt($_POST['password']);
     $obj->add_police_user($_POST['position'],
         $_POST['name'],
         $_POST['number_phone'],
         $_POST['email'],
         $_POST['police_department'],
         $_POST['number_cheton'],
-        $_POST['password'],
+        $encrypted_password,
         $name_file
     );
 }

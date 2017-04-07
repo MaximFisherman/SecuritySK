@@ -1,7 +1,7 @@
 <?php
 session_start();
-include("../Classes/Class_base.php");
-$obj = new Base();
+include("../Classes/Class_news.php");
+$obj = new News();
 
 if($_SESSION["page_number"]=='')
     $obj->view_table_news_police(1,$_POST["input_search_name"]);

@@ -1,6 +1,8 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
-include("../Classes/Class_base.php");
+include("../Classes/Class_blank.php");
+include("../Classes/Class_file.php");
+
 session_start();
   require_once 'tcpdf/tcpdf.php'; // Подключаем библиотеку
   $_SESSION['kol_vx']+=1;//Подсчет количества  перезагрузок
@@ -8,84 +10,19 @@ session_start();
 if(isset($_POST['name_second_name_pollice'])&&$_SESSION['kol_vx']==1)
 {
 
-$obj = new Base();
-
-
-	$_SESSION['name_second_name_pollice'] = $_POST['name_second_name_pollice'];
-	$_SESSION['number_driver'] = $_POST['number_driver'];
-	
-	$_SESSION['date_prigody'] = $_POST["day"]."/".$_POST["month"]."/".$_POST["year"];
-	$_SESSION['day'] = $_POST["day"];
-	$_SESSION["month"]=$_POST["month"];
-	$_SESSION["year"]=$_POST["year"];
-	$_SESSION["hours"]=$_POST["hours"];
-	$_SESSION["minutes"]=$_POST["minutes"];
-	
-	$_SESSION["place_writting_protokol"]=$_POST["place_writting_protokol"];
-	$_SESSION["name_second_name_pollice"]=$_POST["name_second_name_pollice"];
-	$_SESSION["second_name"]=$_POST["second_name"];
-	$_SESSION["name_offender"]=$_POST["name_offender"];
-	$_SESSION["middlename"]=$_POST["middlename"];
-	$_SESSION["place_of_birth"]=$_POST["place_of_birth"];
-	
-	$_SESSION["itizenship"]=$_POST["itizenship"];
-	$_SESSION["place_of_work"]=$_POST["place_of_work"];
-	$_SESSION["place_of_living"]=$_POST["place_of_living"];
-	$_SESSION["telephone_offender"]=$_POST["telephone_offender"];
-	$_SESSION["offender"]=$_POST["offender"];
-	$_SESSION["number_driver"]=$_POST["number_driver"];
-	
-	$_SESSION["number_car"]=$_POST["number_car"];
-	$_SESSION["name_car"]=$_POST["name_car"];
-	$_SESSION["car_owner"]=$_POST["car_owner"];
-	$_SESSION["place_owner"]=$_POST["place_owner"];
-	$_SESSION["what_happened"]=$_POST["what_happened"];
-	
-	$_SESSION["article"]=$_POST["article"];
-	$_SESSION["part_article"]=$_POST["part_article"];
-	$_SESSION["paragraph_article"]=$_POST["paragraph_article"];
-	$_SESSION["witness_1"]=$_POST["witness_1"];
-	$_SESSION["witness_2"]=$_POST["witness_2"];
-	
-	$_SESSION["day_incident"]=$_POST["day_incident"];
-	$_SESSION["month_incident"]=$_POST["month_incident"];
-	$_SESSION["year_incident"]=$_POST["year_incident"];
-	$_SESSION["hour_incident"]=$_POST["hour_incident"];
-	$_SESSION["minutes_incident"]=$_POST["minutes_incident"];
-	
-	$_SESSION["place_read_incident"]=$_POST["place_read_incident"];
-	$_SESSION["Document"]=$_POST["Document"];
-	$_SESSION["series_pasport"]=$_POST["series_pasport"];
-	$_SESSION["number_pasport"]=$_POST["number_pasport"];
-	
-	$_SESSION["inspection"]=$_POST["inspection"];
-	$_SESSION["tool_inspection"]=$_POST["tool_inspection"];
-	$_SESSION["result_inspection"]=$_POST["result_inspection"];
-	$_SESSION["witness_inspection_1"]=$_POST["witness_inspection_1"];
-	$_SESSION["witness_inspection_2"]=$_POST["witness_inspection_2"];
-	
-	
-
+$obj = new Blank();
+$obj->insert_param_session_adm();
 $obj->add_fine_adm($_SESSION['date_prigody'],$_SESSION['number_driver'],$_SESSION["article"]);
 
 $id_fine = $obj->id_fines($_SESSION['date_prigody'],$_SESSION['number_driver']);
 
-$uploaddir = 'File/';
-$uploadfile = $uploaddir . basename($_FILES['police_file']['name']);
 
 
-echo '<pre>';
-if (move_uploaded_file($_FILES['police_file']['tmp_name'], $uploadfile)) {
-    echo "";
-	$type_file=pathinfo($uploadfile, PATHINFO_EXTENSION);
-	$name_file=$uploaddir."".uniqid().".".$type_file;
-	rename($uploadfile, $name_file);
-} else {
-    echo "";
+$file = new File();
+if(isset($_SESSION['number_driver'])) {
+    $obj->add_user_file($_SESSION['number_driver'], $file->upload_on_server_file_attachment_blank(), $id_fine, "docaz_adm");
+    $obj->add_user_file($_SESSION['number_driver'], $file->upload_on_server_file_signature_blank(), $id_fine, "signature_adm");
 }
-
-if(isset($_SESSION['number_driver']))
-$obj->add_user_file($_SESSION['number_driver'],$name_file,$id_fine,"docaz_adm");
 
 }
 

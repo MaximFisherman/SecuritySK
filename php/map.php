@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once("../Classes/Class_base.php");
-$obj = new Base();
+require_once("../Classes/Class_map.php");
+$obj = new Map();
 
 if(isset($_POST["out_to_bd"]))
     $obj-> save_layers($_POST["out_to_bd"]);
