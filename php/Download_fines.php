@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("../Classes/Class_select_fines.php");
 
 $obj = new Select_fines();

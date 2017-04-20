@@ -215,7 +215,7 @@ $this->derivateSecureKeys($pbkdf2Salt);
 $calculatedHmac = $this->hmac($pbkdf2Salt . $iv . $encrypted);
 
 if (!$this->equalHashes($calculatedHmac, $hmac)) {
-echo('HMAC ERROR: Invalid HMAC.'. E_USER_ERROR);
+echo('HMAC ERROR: Invalid HMAC.'. E_USER_ERROR);//Неправиьный пароль вывод ошибки 
 }
 
 // mcrypt_decrypt() pads the *RETURN STRING* with nulls ('\0') to fill out to n * blocksize.
@@ -226,4 +226,5 @@ mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $this->secureEncryptionKey, $encrypted, MCRY
 );
 }
 }
+//error_reporting( E_ERROR );//Отключение warning
 ?>

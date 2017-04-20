@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ("Class_Base.php");
+require_once("Class_base.php");
 class Select_fines extends Base
 {
     //Вывод списка штрафов

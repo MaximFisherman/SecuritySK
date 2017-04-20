@@ -24,7 +24,7 @@
 
 
     <style type="text/css">
-        @import url("css/Dai_map.css");
+		@import url("css/Dai_map.css");
     </style>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script  src="js/bootstrap.min.js"></script>
@@ -1000,7 +1000,7 @@ var editor = {
     addPlacemarkTool : function(toolbar) {
         //create
         var tool = new YMaps.ToolBarRadioButton(YMaps.ToolBar.DEFAULT_GROUP, {
-            icon: "http://api.yandex.ru/i/maps/tools/draw/add_point.png",
+            icon: "images/Point_map_tool.png",
             width: 20,
             hint: "Режим добавления меток"
         });
@@ -1053,7 +1053,7 @@ var editor = {
     // adds polyline tool control
     addPolylineTool : function(toolbar) {
         var tool = new YMaps.ToolBarRadioButton(YMaps.ToolBar.DEFAULT_GROUP, {
-            icon: "http://api.yandex.ru/i/maps/tools/draw/add_line.png",
+            icon: "images/Line_map_tool.png",
             width: 20,
             hint: "Режим добавления ломанных линий"
         });
@@ -1087,7 +1087,7 @@ var editor = {
     // adds polygon tool control
     addPolygonTool : function(toolbar) {
         var tool = new YMaps.ToolBarRadioButton(YMaps.ToolBar.DEFAULT_GROUP, {
-            icon: "C:/Users/Maks_/Downloads/polygon_tool_polygon_6.jpg",
+            icon: "images/polygon_map_tool.jpg",
             width: 20,
             hint: "Режим добавления многоугольников"
         });

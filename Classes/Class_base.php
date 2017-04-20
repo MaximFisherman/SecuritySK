@@ -6,6 +6,7 @@ class Base
 	public $ERROR;//Ошибки в БД
 	function __construct()
 	{
+		// Old connection to database
 		$user='root';
 		$host='localhost';
 		$pas='';
@@ -13,6 +14,7 @@ class Base
 		if(!$this->dlink)
 			$ERROR="Not have connect Base";else 
 		mysql_select_db('kvark');
+	    mysql_query("SET NAMES 'utf8' COLLATE 'utf8_general_ci'");
 	}
 
 
