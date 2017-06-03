@@ -23,8 +23,8 @@ echo('
 <br><br>
 Дата:
 <input type="text" name="date" class="example-text-input">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Номер посвідчення: <input type="text" name="number" class="example-text-input">
-<input type="button" name="article_fine" onclick="Search_fine();" class="btn btn-primary" value="Шукати" >
+Номер удостоверения: <input type="text" name="number" class="example-text-input">
+<input type="button" name="article_fine" onclick="Search_fine();" class="btn btn-primary" value="Искать" >
 </div>
 </div>
 </div>

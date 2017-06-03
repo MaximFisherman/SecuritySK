@@ -36,7 +36,11 @@ class Input extends Base
         //echo"<script>document.location.replace('Authorization.php');</script>";
 
     }
-
+	
+function add_blank($first_name,$second_name,$number_phone,$email){
+	$str="INSERT INTO blank(first_name,second_name,number,email) VALUES('".$first_name."','".$second_name."','".$number_phone."','".$email."');";
+    mysql_query($str,$this->dlink);
+}
     //добавление пользователя в БД
     function add_user($type_user,$number,$email,$number_phone,$place_living,$first_name,$second_name,$password,$car_number_user,$length)
     {

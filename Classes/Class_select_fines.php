@@ -20,8 +20,8 @@ class Select_fines extends Base
                 <tr>
                     <th>Дата</th>
                     <th>Статья</th>
-                    <th>Номер посвідчення</th>
-					<th>Справа</th>
+                    <th>Номер удостоверения</th>
+					<th>Дело</th>
                 </tr>
             </thead>
 			<tbody>
@@ -32,15 +32,15 @@ class Select_fines extends Base
 				<tr>
                     <td data-label=\"Дата\">".$arr['date']."</td>");
             if($arr['article']==null)
-                echo("<td data-label=\"Статья\">(статья не визначена)</td>");else
+                echo("<td data-label=\"Статья\">(статья не определена)</td>");else
                 echo("<td data-label=\"Статья\">".$arr['article']."</td>");
             echo("
                     <td data-label=\"number\">".$arr['number']."</td>
                     <td data-label=\"Подробнее\">
 					<form action='php/Download_files_dai.php' method='POST'>
-					<submit type='button' id='".$arr['number']."' onclick=\"Read_more();\" class=\"id_class btn btn-default \">Змінити</submit>
+					<submit type='button' id='".$arr['number']."' onclick=\"Read_more();\" class=\"id_class btn btn-default \">Изменить</submit>
 					
-					<input type='submit' value='Файли по справі' class='btn btn-primary'>
+					<input type='submit' value='Файли по делу' class='btn btn-primary'>
 					<input type='hidden' name='id_fine' value='".$arr["id_fine"]."'>
 					</form>
 					</td>
@@ -62,11 +62,11 @@ class Select_fines extends Base
         while($arr = mysql_fetch_array($res)){
             echo("
 				<br><br><br><br><br>
-					Номер водійского посвідчення: <input type='text' name='number_fine' class='form-control' value='".$arr['number']."' /><br><br>
-					Дата події       			: <input type='text' name='date_fine' class='form-control' value='".$arr['date']."' /><br><br>
+					Номер водительского удостоверения : <input type='text' name='number_fine' class='form-control' value='".$arr['number']."' disabled/><br><br>
+					Дата события       			: <input type='text' name='date_fine' class='form-control' value='".$arr['date']."' disabled/><br><br>
 					Статья          			: <input type='text' name='article_fine' class='form-control' value='".$arr['article']."' /><br>
 				");
-            echo("<input type='button' onclick='Change_fine();' class='btn btn-primary' value='Змінити данні'/>");
+            echo("<input type='button' onclick='Change_fine();' class='btn btn-primary' value='Изменить данные'/>");
         }
     }
 
@@ -85,8 +85,8 @@ class Select_fines extends Base
 
             echo("
 					<script type='text/javascript'>
-					$('#first_name').text('Им\'я: ".$arr["first_name"]."');
-					$('#second_name').text('Фамілія: ".$arr["second_name"]."');
+					$('#first_name').text('Имя: ".$arr["first_name"]."');
+					$('#second_name').text('Фамилия: ".$arr["second_name"]."');
 					$('#driver_number').text('Номер ВУ: ".$arr["number"]."');
 					$('#number_phone').text('Номер телефону: ".$arr["number_phone"]."');
 					</script>
@@ -115,8 +115,8 @@ class Select_fines extends Base
                     <th>Дата</th>
 					<th>Тип правонарушения</th>
                     <th>Статья</th>
-                    <th>Номер посвідчення</th>
-					<th>Файли по справі</th>
+                    <th>Номер удостоверения</th>
+					<th>Файли по делу</th>
                 </tr>
             </thead>
 			<tbody>
@@ -130,16 +130,16 @@ class Select_fines extends Base
                     <td data-label=\"Дата\">".$arr['date']."</td>");
             if($arr['type']=="dtp")
                 echo("<td data-label=\"Статья\">ДТП</td>");else
-                echo("<td data-label=\"Статья\">Адміністративне правопорушення</td>");
+                echo("<td data-label=\"Статья\">Административное правопорушение</td>");
 
             if($arr['article']==null)
-                echo("<td data-label=\"Статья\">(статья не визначена)</td>");else
+                echo("<td data-label=\"Статья\">(статья не определена)</td>");else
                 echo("<td data-label=\"Статья\">".$arr['article']."</td>");
             echo("
                     <td data-label=\"number\">".$arr['number']."</td>
                     <td data-label=\"Подробнее\">
 					<form action='php/Download_files_user.php' method='POST'>
-					<input type='submit' value='Файли по справі' class='btn btn-warning'>
+					<input type='submit' value='Файли по делу' class='btn btn-warning'>
 					<input type='hidden' name='id_fine' value='".$arr["id_fine"]."'>
 					</form> 
 					</td>

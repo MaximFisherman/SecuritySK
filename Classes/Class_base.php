@@ -14,7 +14,9 @@ class Base
 		if(!$this->dlink)
 			$ERROR="Not have connect Base";else 
 		mysql_select_db('kvark');
-	    mysql_query("SET NAMES 'utf8' COLLATE 'utf8_general_ci'");
+        //mysql_query("SET NAMES 'utf8';");
+        //mysql_query("SET CHARACTER SET 'utf8';");
+        //mysql_query("SET SESSION collation_connection = 'utf8_general_ci';");
 	}
 
 

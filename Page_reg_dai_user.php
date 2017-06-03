@@ -39,7 +39,7 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="textinput">Им'я</label>
+                    <label class="col-sm-2 control-label" for="textinput">Имя</label>
                     <div class="col-sm-10">
                         <input type="text" name="second_name" placeholder="Им'я" class="form-control">
                     </div>
@@ -52,7 +52,7 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="textinput">Фамілія</label>
+                    <label class="col-sm-2 control-label" for="textinput">Фамилия</label>
                     <div class="col-sm-10">
                         <input type="text" name="first_name" placeholder="Фамілія" class="form-control" >
                     </div>

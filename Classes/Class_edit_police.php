@@ -3,7 +3,23 @@ require_once("Class_base.php");
 class Police_edit extends Base
 {
 
+	function View_Profile(){
+		$str="SELECT `type_user`, `email`, `number_phone`, `place_living`, `first_name`, `second_name`, `number`, `password`, `police_department`, `position`, `path_user_police_photo` FROM `user` WHERE number like '%".$_SESSION["avt_user"]."%'";
+    $res= mysql_query($str,$this->dlink);
 
+while($arr = mysql_fetch_array($res)) {
+    echo("<script>
+   
+    if('".$arr['type_user']."'=='police' )
+    {
+    $('#Name_user' ).html('".$arr['first_name']." ".$arr['second_name']."');
+    $('#dol_user' ).html('" . $arr['position'] . "');
+     $(\"#img_profile\").attr(\"src\",\"../php/".$arr['path_user_police_photo']."\");
+    }
+    </script>");
+}
+
+	}
 
     function Change_police_user($number){
         $str="Select type_user,email,number_phone,first_name,number,password,police_department,position,path_user_police_photo from user where type_user like '%police%' and number like '%".$number."%'";
@@ -69,9 +85,6 @@ class Police_edit extends Base
                                 <div class="btn-group">
                                     <button class="btn btn-default id_class" value="left" type="button" onclick="Delete_user_police();" id="'.$arr['number'].'">
                                         <i class="fa fa-fw s fa-remove"></i>Удалить</button>
-                                    
-                                    <a class="btn btn-primary id_class" data-toggle="modal" data-target="#usuario" onclick="Change_user_police();" id="'.$arr['number'].'"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;Правка</a>
-
                                 </div>
                             </td>
                         </tr>

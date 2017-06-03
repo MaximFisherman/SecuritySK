@@ -1,1 +1,1 @@
-<html><head></head><body><h1>ИДЕТ ПЕРЕНОС </h1></body><script  type="text/javascript">window.location.href="Authorization.php";</script></html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body><h1>ИДЕТ ПЕРЕНОС </h1></body><script  type="text/javascript">window.location.href="Authorization.php";</script></html>

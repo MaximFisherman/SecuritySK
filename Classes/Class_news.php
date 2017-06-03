@@ -18,6 +18,234 @@ class News extends Base
         mysql_query($str,$this->dlink);
     }
 
+	 function delete_blank($id_news){
+        $str="DELETE FROM blank WHERE id=".$id_news." ";
+        mysql_query($str,$this->dlink);
+    }
+
+    function delete_client($id_news){
+        $str="DELETE FROM clients WHERE id_client=".$id_news." ";
+        mysql_query($str,$this->dlink);
+    }
+
+    function accept_blank($id_news){
+        $str="SELECT `first_name`, `second_name`, `number`, `email` FROM blank where id=".$id_news.";";
+        $res= mysql_query($str,$this->dlink);
+
+        while($arr = mysql_fetch_array($res)) {
+            $first_name =$arr['first_name'];
+            $second_name =$arr['second_name'];
+            $number =$arr['number'];
+            $email =$arr['email'];
+        }
+        $str="DELETE FROM blank WHERE id=".$id_news." ";
+        $res= mysql_query($str,$this->dlink);
+        $str="INSERT INTO `Clients`(`fist_name`, `number`, `second_name`, `email`) VALUES ('".$first_name."','".$number."','".$second_name."','".$email."')";
+        mysql_query($str,$this->dlink);
+    }
+
+
+    function view_client($number_page,$search_word){
+        //Поиск по базе
+        if($search_word!=""){
+            $str="SELECT id_client,`first_name`, `second_name`, `number`, `email` FROM Clients where number like '%".$search_word."%' or first_name like '%" . $search_word . "%' or second_name like '%" . $search_word . "%' or email like '%" . $search_word . "%'";
+
+            $res= mysql_query($str,$this->dlink);
+
+            while($arr = mysql_fetch_array($res)) {
+                $sub_description_1 =  substr($arr["Description"],0,50);
+                $sub_description = $sub_description_1." ...";
+                echo(" 
+                                    <tr>
+                                    <td class='rows'>" . $arr["first_name"] . "</td>
+                                    <td class='rows'>" . $arr["second_name"] . "</td>
+                                    <td class='rows'>" .$arr["number"]. "</td>
+									<td class='rows'>" .$arr["email"]. "</td>
+                                    <td class='rows' align=\"center\">                                       
+                                        <a href=\"php/Table_client.php?delete_news=1&&id_news=".$arr['id_client']."\" class=\"btn btn-danger button_news_delete\"  title=\"delete\" id='" . $arr["id_client"] . "' ><i class=\"fa fa-trash\" >		</i></a>
+										</td>
+                                </tr>");
+                ECHO("<SCRIPT>$('#position_page').empty();</SCRIPT>");
+            }
+        }else{
+            $str="SELECT  `first_name`, `second_name`, `number`, `email` FROM Clients";
+            $res= mysql_query($str,$this->dlink);
+            $col_rows=mysql_num_rows($res);        //Высчитываем общее количество страниц
+
+
+            //Постраничное отображение
+            $count = 9;// Количество записей на странице.
+            $shift = $count * ($number_page - 1);// Смещение в LIMIT. Те записи, порядковый номер которого больше этого числа, будут выводиться.
+            $str="SELECT id_client,`first_name`, `second_name`, `number`, `email` FROM Clients limit ".$shift.",".$count.";";
+            $res= mysql_query($str,$this->dlink);
+
+            $param_get_type=null;
+            while($arr = mysql_fetch_array($res)) {
+                echo(" <tr>
+                                    <td class='rows'>" . $arr["first_name"] . "</td>
+                                    <td class='rows'>" . $arr["second_name"] . "</td>
+                                    <td class='rows'>" .$arr["number"]."</td>
+									<td class='rows'>" .$arr["email"]. "</td>
+                                    <td class='rows' align=\"center\">                                       
+                                        <a href=\"php/Table_client.php?delete_news=1&&id_news=".$arr['id_client']."\" class=\"btn btn-danger button_news_delete\"  title=\"delete\" id='". $arr["id_client"] ."' ><i class=\"fa fa-trash\" >		</i></a>
+                                        </td>
+                                </tr>");
+            }
+
+//Дополнителные условия для нумерации страниц
+            $col_page = $col_rows / 10;
+            $col_page=ceil($col_page);
+
+
+            //Если в начале
+            if($number_page==1&&$number_page!=$col_page) {
+                for ($i = 0; $i <= $col_page-1; $i++) {
+                    $count_page = $i + 1;
+                    echo("<script>$('#position_page').append('<li id=\"" . $count_page . "\" class=\"li_news_page\"> <a  href=\"php/Table_blank.php?page=" . $count_page . " \">" . $count_page . "</a></li>');</script>");
+                }
+                $number_page_change =$number_page + 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \">»</a></li>');</script>");
+            }
+
+            //Если в конце
+
+            if($number_page!=1&&$number_page==$col_page) {
+                $number_page_change =$number_page - 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \">	&#171;</a></li>');</script>");
+
+                for ($i = 0; $i <= $col_page-1; $i++) {
+                    $count_page = $i + 1;
+                    echo("<script>$('#position_page').append('<li id=\"" . $count_page . "\" class=\"li_news_page\"> <a  href=\"php/Table_blank.php?page=" . $count_page . " \">" . $count_page . "</a></li>');</script>");
+                }
+            }
+
+            //Если в середине
+            if($number_page!=1&&$number_page!=$col_page) {
+                $number_page_change =$number_page - 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \">	&#171;</a></li>');</script>");
+
+                for ($i = 0; $i <= $col_page-1; $i++) {
+                    $count_page = $i + 1;
+                    echo("<script>$('#position_page').append('<li id=\"" . $count_page . "\" class=\"li_news_page\"> <a  href=\"php/Table_blank.php?page=" . $count_page . " \">" . $count_page . "</a></li>');</script>");
+                }
+                $number_page_change =$number_page + 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \"> &#187;</a></li>');</script>");
+            }
+
+
+            /// Подсветка выбранной страницы
+            echo(" 
+        <script> 
+            $('#".$number_page."').addClass('active');
+        </script>
+        ");
+
+        }
+    }
+
+	function view_blank($number_page,$search_word){
+		//Поиск по базе
+        if($search_word!=""){
+            $str="SELECT `id`, `first_name`, `second_name`, `number`, `email` FROM blank where number like '%".$search_word."%' or first_name like '%" . $search_word . "%' or second_name like '%" . $search_word . "%' or email like '%" . $search_word . "%'";
+
+            $res= mysql_query($str,$this->dlink);
+
+            while($arr = mysql_fetch_array($res)) {
+                $sub_description_1 =  substr($arr["Description"],0,50);
+                $sub_description = $sub_description_1." ...";
+                echo(" 
+                                    <tr>
+									<td class='rows'>" . $arr["date"] . "</td>
+                                    <td class='rows'>" . $arr["first_name"] . "</td>
+                                    <td class='rows'>" . $arr["second_name"] . "</td>
+                                    <td class='rows'>" .$arr["number"]. "</td>
+									<td class='rows'>" .$arr["email"]. "</td>
+                                    <td class='rows' align=\"center\">                                       
+                                        <a href=\"php/Table_blank.php?delete_news=1&&id_news=".$arr['id']."\" class=\"btn btn-danger button_news_delete\"  title=\"delete\" id='" . $arr["id"] . "' ><i class=\"fa fa-trash\" >		</i></a>
+                                        <a href=\"php/Table_blank.php?accept_news=1&&id_news=".$arr['id']."\" class=\"btn btn-primary button_news_delete\"  title=\"edit\" id='" . $arr["id"] . "' ><i class=\"fa fa-edit\" >		</i></a>
+										</td>
+                                </tr>");
+                ECHO("<SCRIPT>$('#position_page').empty();</SCRIPT>");
+            }
+        }else{
+            $str="SELECT `id`, `first_name`, `second_name`, `number`, `email` FROM blank";
+            $res= mysql_query($str,$this->dlink);
+            $col_rows=mysql_num_rows($res);        //Высчитываем общее количество страниц
+
+
+            //Постраничное отображение
+            $count = 9;// Количество записей на странице.
+            $shift = $count * ($number_page - 1);// Смещение в LIMIT. Те записи, порядковый номер которого больше этого числа, будут выводиться.
+            $str="SELECT `id`,date, `first_name`, `second_name`, `number`, `email` FROM blank limit ".$shift.",".$count.";";
+            $res= mysql_query($str,$this->dlink);
+
+            $param_get_type=null;
+            while($arr = mysql_fetch_array($res)) {
+                echo(" <tr>
+									<td class='rows'>" . $arr["date"] . "</td>
+                                    <td class='rows'>" . $arr["first_name"] . "</td>
+                                    <td class='rows'>" . $arr["second_name"] . "</td>
+                                    <td class='rows'>" .$arr["number"]."</td>
+									<td class='rows'>" .$arr["email"]. "</td>
+                                    <td class='rows' align=\"center\">                                       
+                                        <a href=\"php/Table_blank.php?delete_news=1&&id_news=".$arr['id']."\" class=\"btn btn-danger button_news_delete\"  title=\"delete\" id='". $arr["id"] ."' ><i class=\"fa fa-trash\" >		</i></a>
+                                        <a href=\"php/Table_blank.php?accept_news=1&&id_news=".$arr['id']."\" class=\"btn btn-primary button_news_delete\"  title=\"ok\" id='" . $arr["id"] . "' ><i class=\"fa fa-ok\" >	Потвердить	</i></a>
+										</td>
+                                </tr>");
+            }
+
+//Дополнителные условия для нумерации страниц
+            $col_page = $col_rows / 10;
+            $col_page=ceil($col_page);
+
+
+            //Если в начале
+            if($number_page==1&&$number_page!=$col_page) {
+                for ($i = 0; $i <= $col_page-1; $i++) {
+                    $count_page = $i + 1;
+                    echo("<script>$('#position_page').append('<li id=\"" . $count_page . "\" class=\"li_news_page\"> <a  href=\"php/Table_blank.php?page=" . $count_page . " \">" . $count_page . "</a></li>');</script>");
+                }
+                $number_page_change =$number_page + 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \">»</a></li>');</script>");
+            }
+
+            //Если в конце
+
+            if($number_page!=1&&$number_page==$col_page) {
+                $number_page_change =$number_page - 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \">	&#171;</a></li>');</script>");
+
+                for ($i = 0; $i <= $col_page-1; $i++) {
+                    $count_page = $i + 1;
+                    echo("<script>$('#position_page').append('<li id=\"" . $count_page . "\" class=\"li_news_page\"> <a  href=\"php/Table_blank.php?page=" . $count_page . " \">" . $count_page . "</a></li>');</script>");
+                }
+            }
+
+            //Если в середине
+            if($number_page!=1&&$number_page!=$col_page) {
+                $number_page_change =$number_page - 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \">	&#171;</a></li>');</script>");
+
+                for ($i = 0; $i <= $col_page-1; $i++) {
+                    $count_page = $i + 1;
+                    echo("<script>$('#position_page').append('<li id=\"" . $count_page . "\" class=\"li_news_page\"> <a  href=\"php/Table_blank.php?page=" . $count_page . " \">" . $count_page . "</a></li>');</script>");
+                }
+                $number_page_change =$number_page + 1;
+                echo("<script>$('#position_page').append('<li><a href=\"php/Table_blank.php?page=" . $number_page_change. " \"> &#187;</a></li>');</script>");
+            }
+
+
+            /// Подсветка выбранной страницы
+            echo(" 
+        <script> 
+            $('#".$number_page."').addClass('active');
+        </script>
+        ");
+
+        }
+    }
+	
+	
     function view_table_news_police($number_page,$search_word){
         //Поиск по базе
         if($search_word!=""){
@@ -49,7 +277,7 @@ class News extends Base
 
 
             //Постраничное отображение
-            $count = 10;// Количество записей на странице.
+            $count = 9;// Количество записей на странице.
             $shift = $count * ($number_page - 1);// Смещение в LIMIT. Те записи, порядковый номер которого больше этого числа, будут выводиться.
             $str="Select id_news,Name,Article,Description,Path_photo,type_news from News limit ".$shift.",".$count.";";
             $res= mysql_query($str,$this->dlink);
@@ -61,7 +289,7 @@ class News extends Base
                 if (trim($arr["type_news"]) == "Зниклий безвiсти") {echo("<tr class=\"Missing_people\">");$param_get_type=3;}
                 $sub_description_1 =  substr($arr["Description"],0,50);
                 $sub_description = $sub_description_1." ...";
-                echo(" 
+                echo(" <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
                                     <td class=\"avatar rows\"><img src=\"php/" . $arr["Path_photo"] . "\"></td>
                                     <td class='rows'>" . $arr["Name"] . "</td>
                                     <td class='rows'>" . $arr["Article"] . "</td>

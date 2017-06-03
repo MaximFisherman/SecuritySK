@@ -9,7 +9,7 @@
     <title>ДПС</title>
 
     <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css_bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <style type="text/css">
         @import url("../css/Dai_news_form.css");
@@ -21,7 +21,8 @@
 <script src="../js/jquery-3.1.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../js/bootstrap.min.js"></script>
-
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
 <form class="form-horizontal" action="Edit_news.php" method="post" enctype="multipart/form-data">
         <fieldset>
         <!-- Form Name -->
@@ -97,6 +98,8 @@
             <input type="hidden" id="id_path_photo" name="name_path_photo" value="">
         </fieldset>
 </form>
+    </div>
+</div>
 </body>
 </html>
 
